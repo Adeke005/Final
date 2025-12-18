@@ -25,8 +25,4 @@ public class Item {
     private Category category;
     @ManyToMany(mappedBy = "items")
     private List<Order> orders;
-
-
-
-
 }
