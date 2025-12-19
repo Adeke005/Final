@@ -1,14 +1,17 @@
 package sas.finalpo.entity;
 
 import jakarta.persistence.*;
+import jakarta.persistence.criteria.Order;
 import lombok.*;
+import sas.finalpo.entity.Category;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Table(name = "items")
 @Getter
 @Setter
-@Table(name = "items")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -20,9 +23,10 @@ public class Item {
     private String description;
     private int price;
     private String code;
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "category_id")
     private Category category;
-    @ManyToMany(mappedBy = "items")
-    private List<Order> orders;
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "items_orders",joinColumns = @JoinColumn(name = "item_id"),inverseJoinColumns = @JoinColumn(name = "order_id"))    @Builder.Default
+    private List<Order> orders = new ArrayList<>();
 }
