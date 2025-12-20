@@ -1,6 +1,6 @@
 package sas.finalpo.mapper;
 
-import jakarta.persistence.criteria.Order;
+import sas.finalpo.entity.Order;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import sas.finalpo.dto.OrderDto;

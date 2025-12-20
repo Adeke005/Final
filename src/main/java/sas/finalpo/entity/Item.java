@@ -1,9 +1,7 @@
 package sas.finalpo.entity;
 
 import jakarta.persistence.*;
-import jakarta.persistence.criteria.Order;
 import lombok.*;
-import sas.finalpo.entity.Category;
 
 import java.util.ArrayList;
 import java.util.List;

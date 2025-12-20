@@ -2,7 +2,7 @@ package sas.finalpo.dto;
 
 import lombok.*;
 
-import java.util.List;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -10,8 +10,8 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class OrderDto {
-
     private Long id;
-
-    private List<ItemDto> items;
+    private String nameDto;
+    private String codeDto;
+    private LocalDateTime createdAtDto;
 }
