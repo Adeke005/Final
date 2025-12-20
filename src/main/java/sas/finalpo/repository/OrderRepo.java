@@ -1,6 +1,6 @@
 package sas.finalpo.repository;
 
-import jakarta.persistence.criteria.Order;
+import sas.finalpo.entity.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

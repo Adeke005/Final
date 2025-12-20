@@ -24,5 +24,5 @@ public class Order {
     private LocalDateTime createdAt = LocalDateTime.now();
     @ManyToMany(mappedBy = "orders")
     @Builder.Default
-    private List<sas.vtoroivsskk.entity.Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 }

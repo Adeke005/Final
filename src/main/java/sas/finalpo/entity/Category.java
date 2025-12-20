@@ -19,5 +19,5 @@ public class Category {
     private Long id;
     private String name;
     @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, fetch = FetchType.LAZY)    @Builder.Default
-    private List<sas.vtoroivsskk.entity.Item> items = new ArrayList<>();
+    private List<Item> items = new ArrayList<>();
 }
