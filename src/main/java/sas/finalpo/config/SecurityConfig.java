@@ -1,8 +1,8 @@
 package sas.finalpo.config;
 
-import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -13,10 +13,14 @@ import sas.finalpo.service.MyUserService;
 
 @Configuration
 @EnableMethodSecurity
-@RequiredArgsConstructor
 public class SecurityConfig {
 
     private final MyUserService myUserService;
+
+    // Конструктор с @Lazy, чтобы разорвать цикл зависимостей
+    public SecurityConfig(@Lazy MyUserService myUserService) {
+        this.myUserService = myUserService;
+    }
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
