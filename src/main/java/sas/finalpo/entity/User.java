@@ -26,7 +26,13 @@ public class User implements UserDetails {
     private String password;
 
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "app_user_permissions",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "permission_id")
+    )
     private List<Permission> permissions;
+
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
