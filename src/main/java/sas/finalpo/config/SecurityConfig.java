@@ -1,45 +1,39 @@
 package sas.finalpo.config;
 
-
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import sas.finalpo.service.MyUserService;
 
 @Configuration
-@EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+@RequiredArgsConstructor
 public class SecurityConfig {
-    @Bean
-    public MyUserService userService(){
-        return new MyUserService();
-    }
-    @Bean
-    public PasswordEncoder passwordEncoder(){
-        return new BCryptPasswordEncoder();
-    }
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        AuthenticationManagerBuilder authenticationManagerBuilder =
-                http.getSharedObject(AuthenticationManagerBuilder.class);
 
-        authenticationManagerBuilder
-                .userDetailsService(userService())
-                .passwordEncoder(passwordEncoder());
+    private final MyUserService myUserService;
 
-        http.authorizeHttpRequests(authorizeHttpRequests -> authorizeHttpRequests
-                .requestMatchers("/auth/**").permitAll()
-                .anyRequest().authenticated()
-        );
-        http.httpBasic(Customizer.withDefaults());
-        http.csrf(csrf -> csrf.disable());
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable())
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/auth/**").permitAll()
+                        .anyRequest().authenticated()
+                )
+                .userDetailsService(myUserService)
+                .httpBasic(Customizer.withDefaults());
+
         return http.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }
